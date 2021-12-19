@@ -1,3 +1,5 @@
+import os
+import torch
 from tensorboardX import SummaryWriter
 
 
@@ -39,10 +41,7 @@ class ModelFileManager:
         self._model_save_path = model_save_path
 
     def save_model(self, model, epoch):
-        pass
-
-    def load_model(self, model_path, model_class):
-        pass
+        torch.save(model.state_dict(), os.path.join(self._model_save_path, f"epoch{epoch}.pth"))
 
     def _saved_model_count(self):
         pass

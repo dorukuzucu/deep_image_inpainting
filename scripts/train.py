@@ -15,11 +15,11 @@ def build_optimizer(optimizer_config: OptimizerConfig, model: nn.Module):
     if optimizer_config.name.lower() not in ["sgd", "adam"]:
         raise NotImplementedError("Only SGD and Adam optimizers are supported")
     if optimizer_config.name == "SGD":
-        optimizer_selection = SGD(model.parameters(), lr=optimizer_config.lr,
+        optimizer_selection = SGD(params=model.parameters(), lr=optimizer_config.lr,
                                   weight_decay=optimizer_config.weight_decay,
                                   momentum=optimizer_config.momentum)
     else:
-        optimizer_selection = Adam(model.parameters(), lr=optimizer_config.lr,
+        optimizer_selection = Adam(params=model.parameters(), lr=optimizer_config.lr,
                                    weight_decay=optimizer_config.weight_decay)
     return optimizer_selection
 
@@ -40,6 +40,12 @@ def build_loss(loss_name: str):
 
 def build_model():
     return RedNet(num_layers=20, input_channels=3)
+
+
+def load_model(model_path):
+    state_dict = torch.load(model_path)
+    model = build_model()
+    return model.load_state_dict(state_dict=state_dict)
 
 
 class Trainer:
