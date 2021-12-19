@@ -17,6 +17,7 @@
     "val_every": 5,
     "device": "cuda:0",
     "output_path": "output",
-    "loss": "mse"
+    "loss": "mse",
+    "start_epoch": 0
   }
 }

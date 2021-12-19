@@ -27,7 +27,7 @@ class TrainConfig(BaseConfig):
     device: str
     output_path: str
     loss: str
-
+    start_epoch: int
 
 @dataclass(init=True, repr=True)
 class DatasetConfig(BaseConfig):

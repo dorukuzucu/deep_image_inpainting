@@ -69,7 +69,7 @@ class Trainer:
         return "cuda" in self.train_config.device and torch.cuda.is_available()
 
     def train(self):
-        for epoch in range(self.train_config.epochs):
+        for epoch in range(self.train_config.start_epoch, self.train_config.epochs):
             train_loss = self.train_single_epoch()
             self.metric_manager.add_train_loss(train_loss, epoch)
             print("Epoch:{} Loss:{}".format(epoch, train_loss))
