@@ -1,4 +1,3 @@
-import torch.utils.tensorboard
 from torch.utils.tensorboard import SummaryWriter
 
 
@@ -28,4 +27,25 @@ class MetricManager:
 
     def add_val_accuracy(self, accuracy_val, epoch):
         self._writer.add_scalar(self._val_accuracy_str, accuracy_val, epoch)
+
+    def close(self):
+        self._writer.close()
+
+
+class ModelFileManager:
+    _model_save_path: str
+
+    def __init__(self, model_save_path, save_model_count: int = 5):
+        self._model_save_path = model_save_path
+
+    def save_model(self, model, epoch):
+        pass
+
+    def load_manager(self, model_path, model_class):
+        pass
+
+    def _saved_model_count(self):
+        pass
+
+
 
