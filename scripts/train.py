@@ -6,6 +6,7 @@ from config.training import TrainConfig
 from config.training import DatasetConfig
 from config.training import OptimizerConfig
 from datasets.inpainting import BsdDataset
+from losses.inpainting import MseLoss
 from models.context_encoder import RedNet
 from scripts.data_savers import MetricManager
 from scripts.data_savers import ModelFileManager
@@ -36,6 +37,8 @@ def build_datasets(dataset_config: DatasetConfig):
 def build_loss(loss_name: str):
     if loss_name.lower() not in ["mse", "mseloss"]:
         raise NotImplementedError("Only MSE Loss is supported")
+    if loss_name.lower() == "mse":
+        return MseLoss()
 
 
 def build_model():

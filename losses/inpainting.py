@@ -14,5 +14,8 @@ class BaseLoss(ABC):
 
 
 class MseLoss(BaseLoss):
+    def __init__(self):
+        self.loss = nn.MSELoss()
+
     def calculate(self, prediction, labels):
-        return nn.MSELoss(prediction, labels)
+        return self.loss(prediction, labels)
