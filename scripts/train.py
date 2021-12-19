@@ -34,7 +34,7 @@ def build_datasets(dataset_config: DatasetConfig):
 
 
 def build_loss(loss_name: str):
-    if loss_name.lower() not in ["mseloss"]:
+    if loss_name.lower() not in ["mse", "mseloss"]:
         raise NotImplementedError("Only MSE Loss is supported")
 
 
@@ -68,8 +68,8 @@ class Trainer:
         if self.gpu_flag:
             self.model.to("cuda:0")
 
-        self.model_file_manager = ModelFileManager()
-        self.metric_manager = MetricManager()
+        self.model_file_manager = ModelFileManager(model_save_path=train_config.output_path)
+        self.metric_manager = MetricManager(log_path=train_config.output_path)
 
     def _gpu_flag(self):
         return "cuda" in self.train_config.device and torch.cuda.is_available()
