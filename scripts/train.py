@@ -27,8 +27,8 @@ def build_optimizer(optimizer_config: OptimizerConfig, model: nn.Module):
 def build_datasets(dataset_config: DatasetConfig):
     if dataset_config.name.lower() not in ["bsd"]:
         raise NotImplementedError("Only Bsd dataset is supported")
-    train_dataset = BsdDataset(dataset_path=dataset_config.train_path)
-    val_dataset = BsdDataset(dataset_path=dataset_config.val_path)
+    train_dataset = BsdDataset(dataset_path=dataset_config.train_path, size=dataset_config.size)
+    val_dataset = BsdDataset(dataset_path=dataset_config.val_path, size=dataset_config.size)
 
     return train_dataset, val_dataset
 

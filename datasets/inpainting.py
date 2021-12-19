@@ -16,7 +16,7 @@ class _BaseDataset(Dataset):
                  size: Union[int, Tuple[int, int]] = None,
                  grayscale: bool = False):
         self.image_format = img_format
-        self.size = size
+        self.size = size if isinstance(size, tuple) else (size, size)
         self.gray_scale = grayscale
 
         self.transforms = None

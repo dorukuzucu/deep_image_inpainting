@@ -9,7 +9,8 @@
     "train_path": "train",
     "val_path": "test",
     "name": "bsd",
-    "mask_type": "square"
+    "mask_type": "square",
+    "size": 320
   },
   "training": {
     "epochs": 25,

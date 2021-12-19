@@ -29,12 +29,14 @@ class TrainConfig(BaseConfig):
     loss: str
     start_epoch: int
 
+
 @dataclass(init=True, repr=True)
 class DatasetConfig(BaseConfig):
     train_path: str
     val_path: str
     name: str
     mask_type: str
+    size: int
 
 
 @dataclass(init=True, repr=True)
