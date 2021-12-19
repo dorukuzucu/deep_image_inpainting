@@ -48,11 +48,11 @@ class RedNet(nn.Module):
         for num_layer, layer in enumerate(self.encoder_layers):
             x = layer(x)
             if not (num_layer % self.skip_period) and self.skip_period:
-                skip_data.append(x)
+                skip_data.append(x.clone())
 
         for num_layer, layer in enumerate(self.decoder_layers):
             x = layer(x)
             if not (num_layer % self.skip_period) and self.skip_period:
-                x += skip_data.pop()
+                x = x.clone() + skip_data.pop()
         return x
 
