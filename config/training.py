@@ -26,13 +26,14 @@ class TrainConfig(BaseConfig):
     batch_size: int
     device: str
     output_path: str
+    loss: str
 
 
 @dataclass(init=True, repr=True)
 class DatasetConfig(BaseConfig):
     train_path: str
     val_path: str
-    dataset_name: str
+    name: str
     mask_type: str
 
 

@@ -8,7 +8,7 @@
   "dataset": {
     "train_path": "train",
     "val_path": "test",
-    "dataset_name": "bsd",
+    "name": "bsd",
     "mask_type": "square"
   },
   "training": {
@@ -16,6 +16,7 @@
     "batch_size": 12,
     "val_every": 5,
     "device": "cuda:0",
-    "output_path": "output"
+    "output_path": "output",
+    "loss": "mse"
   }
 }
