@@ -46,7 +46,7 @@ class _BaseDataset(Dataset):
         mask_bbox = dataset_utils.generate_random_bbox((width, height))
         mask = dataset_utils.bbox_to_mask(mask_bbox, width, height)
         img_clone = img.clone()
-        return img_clone * mask
+        return img_clone * (1 - mask)
 
     def __getitem__(self, index):
         img_path = self.items[index]

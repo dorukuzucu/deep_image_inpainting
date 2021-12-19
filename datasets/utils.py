@@ -29,8 +29,8 @@ def generate_random_bbox(img_size: Union[int, Tuple[int, int]], max_bbox_size: U
 
     bbox_width = _randint(min_bbox_size, max_width)
     bbox_height = _randint(min_bbox_size, max_height)
-    bbox_x = _randint(0, width - 1)
-    bbox_y = _randint(0, height - 1)
+    bbox_x = _randint(0, width - bbox_width - 1)
+    bbox_y = _randint(0, height - bbox_height - 1)
 
     return bbox_x, bbox_y, bbox_width, bbox_height
 
