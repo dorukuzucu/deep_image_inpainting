@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.optim import SGD, Adam
+from tqdm import tqdm
 
 from config.training import TrainConfig
 from config.training import DatasetConfig
@@ -108,14 +109,16 @@ class Trainer:
         iter_loss = float(0)
         self.model.train()
 
-        for data, label in self.train_loader:
-            self.optimizer.zero_grad()
-            self.model.zero_grad()
+        with tqdm(total=len(self.train_loader)) as bar:
+            for data, label in self.train_loader:
+                self.optimizer.zero_grad()
+                self.model.zero_grad()
 
-            loss = self._forward(data, label)
-            self._backward(loss)
+                loss = self._forward(data, label)
+                self._backward(loss)
 
-            iter_loss += float(loss.item())
+                iter_loss += float(loss.item())
+                bar.update(self.train_config.batch_size)
 
         return iter_loss / len(self.train_loader)
 
