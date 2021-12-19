@@ -1,4 +1,4 @@
-from torch.utils.tensorboard import SummaryWriter
+from tensorboardX import SummaryWriter
 
 
 class MetricManager:
@@ -41,7 +41,7 @@ class ModelFileManager:
     def save_model(self, model, epoch):
         pass
 
-    def load_manager(self, model_path, model_class):
+    def load_model(self, model_path, model_class):
         pass
 
     def _saved_model_count(self):
