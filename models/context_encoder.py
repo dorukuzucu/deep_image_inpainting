@@ -8,8 +8,8 @@ from models.commons.layers import Deconv2dBlock
 
 
 class RedNet(nn.Module):
-    decoder_layers: List[nn.Module]
-    encoder_layers: List[nn.Module]
+    decoder_layers: nn.ModuleList
+    encoder_layers: nn.ModuleList
 
     def __init__(self, num_layers: int, input_channels: int = 3, mid_channels: int = 64, skip_period: int = 2):
         super().__init__()
@@ -23,7 +23,7 @@ class RedNet(nn.Module):
         self._build_decoder()
 
     def _build_encoder(self):
-        self.encoder_layers = []
+        self.encoder_layers = nn.ModuleList()
         self.encoder_layers.append(Conv2dBlock(input_channels=self.input_channels,
                                                output_channels=self.mid_channels,
                                                stride=3, padding=1))
@@ -33,7 +33,7 @@ class RedNet(nn.Module):
                                                    padding=1))
 
     def _build_decoder(self):
-        self.decoder_layers = []
+        self.decoder_layers = nn.ModuleList()
         for _ in range(self.half_layers - 1):
             self.decoder_layers.append(Deconv2dBlock(input_channels=self.mid_channels,
                                                      output_channels=self.mid_channels,

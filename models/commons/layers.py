@@ -7,7 +7,7 @@ from typing import Union
 
 
 class BaseBlock(nn.Module):
-    layers: List[nn.Module]
+    layers: nn.ModuleList
     network: nn.Module
 
     def __init__(self, output_channels: int, input_channels: int = 3, kernel_size: Union[int, Tuple[int, int]] = 3,
@@ -24,7 +24,7 @@ class BaseBlock(nn.Module):
         self._build_network()
 
     def _build_network(self):
-        self.layers = []
+        self.layers = nn.ModuleList()
         self._add_conv(output_channels=self.output_channels, input_channels=self.input_channels,
                        kernel_size=self.kernel_size, stride=self.stride, padding=self.padding)
         if self.add_batch_norm:
