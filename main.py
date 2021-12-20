@@ -2,8 +2,9 @@ import argparse
 from torch.utils.data import DataLoader
 
 from config import utils
+from config.training import BaseDatasetConfig
+from config.training import DatasetConfigClassFactory
 from config.training import TrainConfig
-from config.training import DatasetConfig
 from config.training import OptimizerConfig
 
 from scripts.train import build_loss
@@ -23,14 +24,15 @@ def _parse_configs(config_path):
     json_config = utils.read_json(config_path)
     try:
         train_config = TrainConfig.from_json(json_config["training"])
-        dataset_config = DatasetConfig.from_json(json_config["dataset"])
+        dataset_config_class = DatasetConfigClassFactory.from_json(json_config["dataset"]["name"])
+        dataset_config = dataset_config_class.from_json(json_config["dataset"])
         optimizer_config = OptimizerConfig.from_json(json_config["optimizer"])
         return train_config, dataset_config, optimizer_config
     except KeyError as e:
         raise KeyError(f"Missing configuration in config file {e}")
 
 
-def main(train_config: TrainConfig, dataset_config: DatasetConfig, optimizer_config: OptimizerConfig, weight_path=None):
+def main(train_config: TrainConfig, dataset_config: BaseDatasetConfig, optimizer_config: OptimizerConfig, weight_path=None):
     model = build_model() if weight_path is None else load_model(weight_path)
     optimizer = build_optimizer(optimizer_config, model)
     # TODO refactor

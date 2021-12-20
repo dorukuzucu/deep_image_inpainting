@@ -4,9 +4,10 @@ from torch.optim import SGD, Adam
 from tqdm import tqdm
 
 from config.training import TrainConfig
-from config.training import DatasetConfig
+from config.training import BsdDatasetConfig
 from config.training import OptimizerConfig
 from datasets.inpainting import BsdDataset
+from datasets.inpainting import CelebADataset
 from losses.inpainting import MseLoss
 from models.context_encoder import RedNet
 from scripts.data_savers import MetricManager
@@ -26,11 +27,19 @@ def build_optimizer(optimizer_config: OptimizerConfig, model: nn.Module):
     return optimizer_selection
 
 
-def build_datasets(dataset_config: DatasetConfig):
-    if dataset_config.name.lower() not in ["bsd"]:
-        raise NotImplementedError("Only Bsd dataset is supported")
-    train_dataset = BsdDataset(dataset_path=dataset_config.train_path, size=dataset_config.size)
-    val_dataset = BsdDataset(dataset_path=dataset_config.val_path, size=dataset_config.size)
+def build_datasets(dataset_config: BsdDatasetConfig):
+    if dataset_config.name.lower()=="bsd":
+        train_dataset = BsdDataset(dataset_path=dataset_config.train_path, size=dataset_config.size)
+        val_dataset = BsdDataset(dataset_path=dataset_config.val_path, size=dataset_config.size)
+    elif dataset_config.name.lower()=="celeba":
+        train_dataset = CelebADataset(dataset_path=dataset_config.train_path,
+                                      partition_file_path=dataset_config.partition_file_path,
+                                      size=dataset_config.size, stage_flag=0)
+        val_dataset = CelebADataset(dataset_path=dataset_config.train_path,
+                                    partition_file_path=dataset_config.partition_file_path,
+                                    size=dataset_config.size, stage_flag=1)
+    else:
+        raise NotImplementedError(f"Dataset is not supported")
 
     return train_dataset, val_dataset
 
@@ -43,7 +52,7 @@ def build_loss(loss_name: str):
 
 
 def build_model():
-    return RedNet(num_layers=20, input_channels=3)
+    return RedNet(num_layers=30, input_channels=3)
 
 
 def load_model(model_path):
@@ -135,6 +144,3 @@ class Trainer:
 
     def save_model(self, epoch):
         self.model_file_manager.save_model(model=self.model, epoch=epoch)
-
-
-

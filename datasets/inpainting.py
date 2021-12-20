@@ -1,10 +1,11 @@
-from typing import List
-from typing import Tuple
-from typing import Union
-
+import os
 import torch
 from torchvision import transforms
 from torch.utils.data import Dataset
+
+from typing import List
+from typing import Tuple
+from typing import Union
 
 import datasets.utils as dataset_utils
 
@@ -68,3 +69,20 @@ class BsdDataset(_BaseDataset):
 
     def _list_dataset(self):
         self.items = dataset_utils.list_directory(dir_path=self.dataset_path, content_type=self.image_format)
+
+
+class CelebADataset(_BaseDataset):
+    items: List[str]
+
+    def __init__(self, dataset_path: str, partition_file_path: str, img_format="jpg", stage_flag: int = 0,
+                 size: Union[int, Tuple[int, int]] = None, grayscale: bool = False):
+        super().__init__(img_format, size, grayscale)
+        self.dataset_path = dataset_path
+        self.partition_file_path = partition_file_path
+        self.stage_flag = stage_flag
+
+        self.initialize()
+
+    def _list_dataset(self):
+        partition = dataset_utils.txt_to_line_list(self.partition_file_path)
+        self.items = [os.path.join(self.dataset_path, item.split(" ")[0]) for item in partition if item.split(" ")[1] == str(self.stage_flag)]

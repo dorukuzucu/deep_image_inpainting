@@ -56,3 +56,12 @@ def read_img(img_path):
     img = Image.open(img_path)
     img = img.convert("RGB")
     return img
+
+
+def txt_to_line_list(txt_path):
+    if not os.path.isfile(txt_path):
+        raise Exception("Text file is not found")
+    with open(txt_path) as txt_file:
+        lines = txt_file.readlines()
+    lines = [line.strip() for line in lines]
+    return lines
