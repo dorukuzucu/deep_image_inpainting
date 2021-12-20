@@ -52,7 +52,7 @@ def build_loss(loss_name: str):
 
 
 def build_model():
-    return RedNet(num_layers=30, input_channels=3)
+    return RedNet(num_layers=24, input_channels=3)
 
 
 def load_model(model_path):

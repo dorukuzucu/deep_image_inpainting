@@ -26,7 +26,7 @@ class RedNet(nn.Module):
         self.encoder_layers = nn.ModuleList()
         self.encoder_layers.append(Conv2dBlock(input_channels=self.input_channels,
                                                output_channels=self.mid_channels,
-                                               stride=3, padding=1))
+                                               stride=1, padding=1))
         for _ in range(self.half_layers - 1):
             self.encoder_layers.append(Conv2dBlock(input_channels=self.mid_channels,
                                                    output_channels=self.mid_channels,
@@ -40,7 +40,7 @@ class RedNet(nn.Module):
                                                      padding=1))
         self.decoder_layers.append(Deconv2dBlock(input_channels=self.mid_channels,
                                                  output_channels=self.input_channels,
-                                                 stride=3, padding=1))
+                                                 stride=1, padding=1))
 
     def forward(self, x):
         skip_data: List[torch.tensor] = []
