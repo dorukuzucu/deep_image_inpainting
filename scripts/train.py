@@ -118,7 +118,7 @@ class Trainer:
                 self._backward(loss)
 
                 iter_loss += float(loss.item())
-                bar.update(self.train_config.batch_size)
+                bar.update(1)
 
         return iter_loss / len(self.train_loader)
 
