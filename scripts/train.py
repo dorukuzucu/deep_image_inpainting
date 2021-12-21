@@ -28,14 +28,14 @@ def build_optimizer(optimizer_config: OptimizerConfig, model: nn.Module):
 
 
 def build_datasets(dataset_config: BsdDatasetConfig):
-    if dataset_config.name.lower()=="bsd":
+    if dataset_config.name.lower() == "bsd":
         train_dataset = BsdDataset(dataset_path=dataset_config.train_path, size=dataset_config.size)
         val_dataset = BsdDataset(dataset_path=dataset_config.val_path, size=dataset_config.size)
-    elif dataset_config.name.lower()=="celeba":
-        train_dataset = CelebADataset(dataset_path=dataset_config.train_path,
+    elif dataset_config.name.lower() == "celeba":
+        train_dataset = CelebADataset(dataset_path=dataset_config.dataset_path,
                                       partition_file_path=dataset_config.partition_file_path,
                                       size=dataset_config.size, stage_flag=0)
-        val_dataset = CelebADataset(dataset_path=dataset_config.train_path,
+        val_dataset = CelebADataset(dataset_path=dataset_config.dataset_path,
                                     partition_file_path=dataset_config.partition_file_path,
                                     size=dataset_config.size, stage_flag=1)
     else:
